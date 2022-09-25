@@ -1,0 +1,434 @@
+local OrionLib = loadstring(game:HttpGet(('https://raw.githubusercontent.com/shlexware/Orion/main/source')))()
+
+
+local Window = OrionLib:MakeWindow({Name = "VernyHub", HidePremium = false, SaveConfig = true, ConfigFolder = "OrionTest"})
+
+
+local Main = Window:MakeTab({
+	Name = "Main",
+	Icon = "rbxassetid://4483345998",
+	PremiumOnly = false
+})
+
+local MainSection = Main:AddSection({
+	Name = "AutoFarm"
+})
+
+OrionLib:MakeNotification({
+	Name = "Script Loaded!",
+	Content = "The Script has succesfully loaded!",
+	Image = "rbxassetid://4483345998",
+	Time = 5
+})
+
+--autoclick
+
+Main:AddToggle({
+	Name = "AutoClicker",
+	Default = false,
+	Callback = function(ATValue)
+		_G.autotap = ATValue;
+
+        task.spawn(function()
+            while _G.autotap do
+game:GetService("ReplicatedStorage").Events.Click3:FireServer()
+wait(0.01)
+            end
+        end)
+	end    
+})
+
+
+--autorebirth
+
+Main:AddToggle({
+	Name = "AutoRebirth",
+	Default = false,
+	Callback = function(ATRValue)
+		_G.togrev = ATRValue
+	end    
+})
+
+
+local adamishotfr = {}
+for i=1,64 do
+      table.insert(adamishotfr,i)
+end
+
+
+
+Main:AddDropdown({
+	Name = "Select The Option Rebirths",
+	Default = " ",
+	Options = {unpack(adamishotfr)},
+	Callback = function(DRValue)
+		_G.drebirth = DRValue
+        print(_G.drebirth)
+	end    
+})
+
+
+task.spawn(function()
+    while task.wait() do
+        if _G.togrev then
+            if _G.drebirth ~= nil then
+                local args = {
+                    [1] = _G.drebirth
+                }
+                game:GetService("ReplicatedStorage").Events.Rebirth:FireServer(unpack(args))
+            end
+        end
+    end
+end)
+
+
+--auto egg
+
+local Main = Window:MakeTab({
+	Name = "AutoEgg",
+	Icon = "rbxassetid://4483345998",
+	PremiumOnly = false
+})
+
+local MainSection = Main:AddSection({
+	Name = "Auto Open EGGS"
+})
+
+
+
+local adamissmartfr3x = {}
+
+for i, v in pairs(game:GetService("Workspace").Scripts.Eggs:GetChildren()) do
+	if v:IsA("Model") then
+		if not table.find(adamissmartfr3x, v.Name) then
+			table.insert(adamissmartfr3x, v.Name)
+		end
+	end
+end
+
+
+
+Main:AddToggle({
+	Name = "AutoOpen3X",
+	Default = false,
+	Callback = function(TEValue)
+		_G.toegg = TEValue
+	end    
+})
+
+
+Main:AddDropdown({
+	Name = "Select The Egg You Want To Open",
+	Default = " ",
+	Options = adamissmartfr3x,
+	Callback = function(DEValue)
+		_G.open = DEValue
+		print(_G.open)
+	end    
+})
+
+
+task.spawn(function()
+	while task.wait() do
+		if _G.toegg then
+			if _G.open ~= nil then
+				local args = {
+					[1] = _G.open,
+					[2] = "Triple"
+				}
+				game:GetService("ReplicatedStorage").Functions.Unbox:InvokeServer(unpack(args))
+				wait(0.1)
+			end
+		end
+	end
+end)
+
+
+--autoegg 1x
+
+local adamissmartfr1x = {}
+
+for i, v in pairs(game:GetService("Workspace").Scripts.Eggs:GetChildren()) do
+	if v:IsA("Model") then
+		if not table.find(adamissmartfr1x, v.Name) then
+			table.insert(adamissmartfr1x, v.Name)
+		end
+	end
+end
+
+Main:AddToggle({
+	Name = "AutoOpen1X",
+	Default = false,
+	Callback = function(TEV1alue)
+		_G.toegg1 = TEV1alue
+	end    
+})
+
+
+Main:AddDropdown({
+	Name = "Select The Egg You Want To Open",
+	Default = " ",
+	Options = adamissmartfr1x,
+	Callback = function(DEV1alue)
+		_G.open = DEV1alue
+		print(_G.open)
+	end    
+})
+
+
+task.spawn(function()
+	while task.wait() do
+		if _G.toegg1 then
+			if _G.open ~= nil then
+				local args = {
+					[1] = _G.open,
+					[2] = "Single"
+				}
+				game:GetService("ReplicatedStorage").Functions.Unbox:InvokeServer(unpack(args))
+				wait(0.1)
+			end
+		end
+	end
+end)
+--misc
+
+Main:AddToggle({
+	Name = "AutoCraftAll",
+	Default = false,
+	Callback = function(CAValue)
+		_G.autocraft = CAValue;
+
+		task.spawn(function()
+			while _G.autocraft do
+				local args = {
+					[1] = "CraftAll",
+					[2] = {}
+				}
+				
+				game:GetService("ReplicatedStorage").Functions.Request:InvokeServer(unpack(args))
+				wait(5)
+			end
+		end)
+	end    
+})
+
+--maps
+local Main = Window:MakeTab({
+	Name = "Misc",
+	Icon = "rbxassetid://4483345998",
+	PremiumOnly = false
+})
+
+
+
+
+Main:AddButton({
+	Name = "UnlockAllMaps",
+	Callback = function()
+		game:GetService("Workspace").Scripts.Portals.Forest.Unlocked.Value = true
+		wait(0.1)
+		game:GetService("Workspace").Scripts.Portals.Beach.Unlocked.Value = true
+		wait(0.1)
+		game:GetService("Workspace").Scripts.Portals.Atlantis.Unlocked.Value = true
+		wait(0.1)
+		game:GetService("Workspace").Scripts.Portals.Desert.Unlocked.Value = true
+		wait(0.1)
+		game:GetService("Workspace").Scripts.Portals.Winter.Unlocked.Value = true
+		wait(0.1)
+		game:GetService("Workspace").Scripts.Portals.Volcano.Unlocked.Value = true
+		wait(0.1)
+		game:GetService("Workspace").Scripts.Portals.Cube.Unlocked.Value = true
+		wait(0.1)
+		game:GetService("Workspace").Scripts.Portals.Moon.Unlocked.Value = true
+		wait(0.1)
+		game:GetService("Workspace").Scripts.Portals.Cyber.Unlocked.Value = true
+		wait(0.1)
+		game:GetService("Workspace").Scripts.Portals.Magic.Unlocked.Value = true
+		wait(0.1)
+		game:GetService("Workspace").Scripts.Portals.Heaven.Unlocked.Value = true
+		wait(0.1)
+		game:GetService("Workspace").Scripts.Portals.Nuclear.Unlocked.Value = true
+		wait(0.1)
+		game:GetService("Workspace").Scripts.Portals.Void.Unlocked.Value = true
+		wait(0.1)
+		game:GetService("Workspace").Scripts.Portals.Spooky.Unlocked.Value = true
+		wait(0.1)
+		game:GetService("Workspace").Scripts.Portals.Cave.Unlocked.Value = true
+		wait(0.1)
+		game:GetService("Workspace").Scripts.Portals.Steampunk.Unlocked.Value = true
+		wait(0.1)
+		game:GetService("Workspace").Scripts.Portals.Hell.Unlocked.Value = true
+		wait(0.1)
+		game:GetService("Workspace").Scripts.Portals.Space.Unlocked.Value = true
+		wait(0.1)
+		game:GetService("Workspace").Scripts.Portals.Hacker.Unlocked.Value = true
+		wait(0.1)
+		game:GetService("Workspace").Scripts.Portals.Mars.Unlocked.Value = true
+		wait(0.1)
+		game:GetService("Workspace").Scripts.Portals.Alien.Unlocked.Value = true
+		wait(0.1)
+		game:GetService("Workspace").Scripts.Portals["Space Lab"].Unlocked.Value = true
+		wait(0.1)
+		game:GetService("Workspace").Scripts.Portals["Galaxy Forest"].Unlocked.Value = true
+		wait(0.1)
+		game:GetService("Workspace").Scripts.Portals.Fantasy.Unlocked.Value = true
+		wait(0.1)
+		game:GetService("Workspace").Scripts.Portals.Neon.Unlocked.Value = true
+		wait(0.1)
+		game:GetService("Workspace").Scripts.Portals.Shadow.Unlocked.Value = true
+		wait(0.1)
+		game:GetService("Workspace").Scripts.Portals.Destruction.Unlocked.Value = true
+		wait(0.1)
+		game:GetService("Workspace").Scripts.Portals.Sun.Unlocked.Value = true
+		wait(0.1)
+		game:GetService("Workspace").Scripts.Portals.Saturn.Unlocked.Value = true
+		wait(0.1)
+		game:GetService("Workspace").Scripts.Portals["Black Hole"].Unlocked.Value = true
+		wait(0.1)
+  	end    
+})
+
+--walkspeed
+
+
+Main:AddSlider({
+	Name = "Change Walkspeed",
+	Min = 50,
+	Max = 400,
+	Default = 50,
+	Color = Color3.fromRGB(255,255,255),
+	Increment = 1,
+	ValueName = "WalkSpeed",
+	Callback = function(SSValue)
+		game.Players.LocalPlayer.Character.Humanoid.WalkSpeed = SSValue
+	end    
+})
+
+
+--teleport world
+
+function teleportTO(placeCFrame)
+	local plyr = game.Players.LocalPlayer;
+	if plyr.Character then
+		plyr.Character.HumanoidRootPart.CFrame = placeCFrame;
+	end
+end
+function teleportWorld(world)
+	if game:GetService("Workspace").Scripts.Portals:FindFirstChild(world) then
+		teleportTO(game:GetService("Workspace").Scripts.Portals[world].Touch.CFrame)
+	end
+end
+
+
+
+local selectedWorld;
+
+Main:AddDropdown({
+	Name = "SelectWorld",
+	Default = " ",
+	Options = {"Forest", "Beach", "Atlantis", "Desert", "Winter", "Volcano", "Cube", "Moon", "Cyber", "Magic", "Heaven", "Nuclear", "Void", "Spooky", "Cave", "Steampunk", "Hell", "Space", "Hacker", "Mars", "Alien", "Space", "Galaxy Forest", "Neon", "Shadow", "Destruction", "Sun", "Saturn", "Black Hole",},
+	Callback = function(SWValue)
+		selectedWorld2 = SWValue
+		print(selectedWorld2)
+	end    
+})
+
+Main:AddButton({
+	Name = "teleport to selected world",
+	Callback = function()
+		if selectedWorld2 then
+			teleportWorld(selectedWorld2)
+		end
+  	end    
+})
+
+
+
+local Main = Window:MakeTab({
+	Name = "Potions",
+	Icon = "rbxassetid://4483345998",
+	PremiumOnly = false
+})
+
+
+Main:AddButton({
+	Name = "Buy 100 2x click pot",
+	Callback = function()	
+local args = {
+    [1] = "x2Clicks",
+    [2] = 100
+}
+game:GetService("ReplicatedStorage").Events.Potion:FireServer(unpack(args))
+wait(0.1)
+  	end    
+})
+
+
+Main:AddButton({
+	Name = "Buy 100 2x gems pot",
+	Callback = function()	
+local args = {
+    [1] = "x2Gems",
+    [2] = 100
+}
+game:GetService("ReplicatedStorage").Events.Potion:FireServer(unpack(args))
+wait(0.1)
+  	end    
+})
+
+
+Main:AddButton({
+	Name = "Buy 100 luck pot",
+	Callback = function()	
+local args = {
+    [1] = "x2Luck",
+    [2] = 100
+}
+game:GetService("ReplicatedStorage").Events.Potion:FireServer(unpack(args))
+wait(0.1)
+  	end    
+})
+
+
+Main:AddButton({
+	Name = "Buy 100 2x rebirths pot",
+	Callback = function()	
+local args = {
+    [1] = "x2Rebirths",
+    [2] = 100
+}
+game:GetService("ReplicatedStorage").Events.Potion:FireServer(unpack(args))
+wait(0.1)
+  	end    
+})
+
+
+Main:AddButton({
+	Name = "Buy 100 2x petxp pot",
+	Callback = function()	
+local args = {
+    [1] = "x2PetXP",
+    [2] = 100
+}
+game:GetService("ReplicatedStorage").Events.Potion:FireServer(unpack(args))
+wait(0.1)
+  	end    
+})
+
+
+Main:AddButton({
+	Name = "Buy 100 2x hatchspeed pot",
+	Callback = function()	
+local args = {
+    [1] = "x2HatchSpeed",
+    [2] = 100
+}
+game:GetService("ReplicatedStorage").Events.Potion:FireServer(unpack(args))
+wait(0.1)
+  	end    
+})
+
+
+
+
+
